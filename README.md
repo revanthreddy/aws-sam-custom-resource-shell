@@ -2,7 +2,7 @@
 
 ## Pre-req
 - Create an s3 bucket
-- Have cli access
+- Have aws cli installed
 
 ## aws-sam-custom-resource
 Run the below command with above created bucket name as a parameter
