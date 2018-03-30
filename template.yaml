@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: A starter AWS Lambda function.
+Resources:
+  SamCustomResourceLambda:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: sam_custom_resource_lambda_function
+      Handler: index.lambda_handler
+      Runtime: python3.6
+      CodeUri: app/
+      Role: !GetAtt samCustomResourceLambdaRole.Arn
+      Description: lambda to handle custom resource
+      MemorySize: 128
+      Timeout: 3
+
+  SamCustomResource:
+    Type: Custom::TestCustomResource
+    Properties:
+      ServiceToken: !GetAtt SamCustomResourceLambda.Arn
+      Key1: "hello"
+
+  samCustomResourceLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      RoleName: sam_custom_resource_lambda-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: sam_custom_resource_lambda-role-log-policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:CreateLogGroup
+                  - logs:PutLogEvents
+                Resource:
+                  - arn:aws:logs:*:*:*
