@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#bucket is where SAM uploads the code (zipped) and upload
+#bucket is where SAM uploads the code (zipped) and manages it
 bucket_name=$1
 if [ ! -z "$bucket_name" ]; then
 	stack_name=sam-custom-resource-lambda-stack
