@@ -1,4 +1,11 @@
 # aws-sam-custom-resource
-Replace the bucket name variable in the cfn_run.sh file
+##Pre-req
+Create an s3 bucket
 
-$ sh cfn_run.sh
+## aws-sam-custom-resource
+Run the below command with above created bucket name
+
+$ sh cfn_run.sh {my_bucket_name}
+
+
+
